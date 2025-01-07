@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let data = {};
-if (typeof window !== "undefined") {
-  const rawData = localStorage.getItem("stats");
-  data = rawData ? JSON.parse(rawData) : {};
-}
+const getInitialData = () => {
+  if (typeof window !== "undefined") {
+    const rawData = localStorage.getItem("stats");
+    return rawData ? JSON.parse(rawData) : {};
+  }
+  return {}; // Return empty object during server-side rendering
+};
+
+const data = getInitialData();
 
 console.log(data);
 
@@ -22,6 +26,10 @@ export const scoreSlice = createSlice({
       state.score = action.payload.score;
       state.percentile = action.payload.percentile;
       state.rank = action.payload.rank;
+      // Save the updated state to localStorage
+      if (typeof window !== "undefined") {
+        localStorage.setItem("stats", JSON.stringify(state));
+      }
     },
   },
 });
