@@ -54,6 +54,7 @@ export default function UpdateScoreModal({ open, handleOpen, stats }) {
       return; // Prevent save if any field is empty
     }
     // If no field is empty, save the form
+    localStorage.setItem("stats", JSON.stringify(formValues));
     dispatch(update(formValues));
     handleOpen();
   };

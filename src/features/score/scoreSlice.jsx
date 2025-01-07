@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+const rawData = localStorage.getItem("stats");
+const data = rawData ? JSON.parse(rawData) : {};
+console.log(data)
 const initialState = {
-  score: 12,
-  percentile: 90,
-  rank: 1,
+  score: data?.score|| 12,
+  percentile:data?.percentile || 90,
+  rank: data?.rank ||1,
 };
 export const scoreSlice = createSlice({
   name: "score",
