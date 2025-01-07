@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+const withMT = require("@material-tailwind/react/utils/withMT");
+ 
+module.exports = withMT( {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,5 +15,21 @@ export default {
       },
     },
   },
-  plugins: [],
-};
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.no-spinner': {
+          '&::-webkit-inner-spin-button': {
+            '-webkit-appearance': 'none',
+            margin: '0',
+          },
+          '&::-webkit-outer-spin-button': {
+            '-webkit-appearance': 'none',
+            margin: '0',
+          },
+          '-moz-appearance': 'textfield',
+        },
+      });
+    },
+  ],
+});
